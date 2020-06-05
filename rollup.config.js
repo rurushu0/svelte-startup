@@ -1,8 +1,9 @@
 import resolve from "@rollup/plugin-node-resolve";
 import svelte from "rollup-plugin-svelte";
 import livereload from "rollup-plugin-livereload";
+import { terser } from "rollup-plugin-terser";
 
-const production = !process.env.ROLLUP_WATCH;
+const production = process.env.NODE_ENV == "production";
 
 export default {
   input: "src/main.js",
@@ -26,5 +27,7 @@ export default {
     }),
 
     !production && livereload("public"),
+
+    production && terser(),
   ],
 };
